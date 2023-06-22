@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+
+vector<long long int> generateRows(int n){
+    vector<long long int>temp;
+    long long int res = 1;
+    temp.push_back(res);
+
+    for(int i=1;i<n;i++){
+      res*=(n-i);
+      res/=(i);
+      temp.push_back(res);
+    }
+    return temp;
+}
+vector<vector<long long int>> printPascal(int n) 
+{
+     vector<vector<long long int>>ans;
+     for(long long int i=1;i<=n;i++){
+       ans.push_back(generateRows(i));
+     }
+     return ans;
+}
