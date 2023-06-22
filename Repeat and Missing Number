@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+
+pair<int,int> missingAndRepeating(vector<int> &arr, int n)
+{
+	int missing = -1;
+	int repeating = -1;
+	long long s = 0;
+	long long s2 = 0;
+	for(int i=0;i<n;i++){
+		s+=arr[i];
+		s2+=arr[i]*arr[i];
+	}
+	long long sn = n*(n+1);
+	sn = sn/2;
+	long long sn2 = n*(n+1);
+	sn2 = sn2*(2*n+1);
+	sn2 = sn2/6;
+	long long sindiff = s - sn;
+    long long doublediff = (s2 - sn2)/sindiff;
+	repeating = (sindiff+doublediff)/2;
+	missing = doublediff - repeating;
+	return {missing,repeating};
+}
