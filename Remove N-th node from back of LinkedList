@@ -1,0 +1,30 @@
+Node* removeKthNode(Node* head, int k)
+{
+    Node* curr = head;
+    int count = 0;
+    while(curr!=NULL){
+        count++;
+        curr = curr->next;
+    }
+    if(k>count) return head;
+    if(k==count){
+        Node* del = head;
+        head = head->next;
+        del->next = NULL;
+        delete(del);
+        return head;
+    }
+    curr = head;
+    Node* prev = NULL;
+    int cnt = 0;
+    while(cnt<count-k){
+        cnt++;
+        prev = curr;
+        curr = curr->next;
+    }
+    Node* forward = curr->next;
+    curr->next = NULL;
+    delete(curr);
+    prev->next = forward;
+    return head;
+}
