@@ -1,0 +1,23 @@
+Node* floyd(Node* head){
+    Node* fast = head;
+    Node* slow = head;
+    while(fast!=NULL){
+        fast = fast->next;
+        if(fast!=NULL) fast = fast->next;
+        slow = slow->next;
+        if(fast==slow) return slow;
+    }
+    return NULL;
+}
+Node *firstNode(Node *head)
+{
+    if(head==NULL || head->next==NULL) return NULL;
+    Node* loop = floyd(head);
+    if(loop==NULL) return NULL;
+    Node* slow = head;
+    while(slow!=loop){
+        slow = slow->next;
+        loop = loop->next;
+    }
+    return slow;
+}
