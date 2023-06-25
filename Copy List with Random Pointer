@@ -1,0 +1,35 @@
+void inserttail(LinkedListNode<int>* &head,LinkedListNode<int>* &tail,int data){
+    LinkedListNode<int>* temp = new LinkedListNode<int>(data);
+    if(head==NULL){
+        head = temp;
+        tail = temp;
+        return;
+    }
+    tail->next = temp;
+    tail = temp;
+}
+LinkedListNode<int> *cloneRandomList(LinkedListNode<int> *head)
+{
+    LinkedListNode<int>* clonehead = NULL;
+    LinkedListNode<int>* clonetail = NULL;
+    LinkedListNode<int>* temp = head;
+    while(temp!=NULL){
+        inserttail(clonehead,clonetail,temp->data);
+        temp = temp->next;
+    }
+    map<LinkedListNode<int>*,LinkedListNode<int>*>mapping;
+    LinkedListNode<int>* originalNode = head;
+    LinkedListNode<int>* cloneNode = clonehead;
+    while(originalNode!=NULL){
+        mapping[originalNode] = cloneNode;
+        originalNode = originalNode->next;
+        cloneNode = cloneNode->next;
+    }
+    originalNode = head;
+    cloneNode = clonehead;
+    while(originalNode!=NULL){
+        cloneNode->random = mapping[originalNode->random];
+        originalNode = originalNode->next;
+        cloneNode = cloneNode->next;
+    }
+    return clonehead;
