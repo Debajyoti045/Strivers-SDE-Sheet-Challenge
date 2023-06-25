@@ -1,1 +1,21 @@
-
+#include <bits/stdc++.h> 
+long getTrappedWater(long *arr, int n){
+    long left = 0;
+    long right = n-1;
+    long ans = 0;
+    long maxLeft = 0;;
+    long rightMax = 0;
+    while(left<=right){
+        if(arr[left]<=arr[right]){
+          if(arr[left]>=maxLeft) maxLeft = arr[left];
+          else ans+=maxLeft-arr[left];
+          left++;
+        }
+        else{
+          if(arr[right]>=rightMax) rightMax = arr[right];
+          else ans+=rightMax-arr[right];
+          right--;
+        }
+    }
+    return ans;
+}
