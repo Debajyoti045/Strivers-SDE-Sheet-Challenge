@@ -1,0 +1,22 @@
+Node *getListAfterReverseOperation(Node *head, int n, int b[]){
+	if(head==NULL) return NULL;
+	Node* dummy = new Node(0);
+	dummy->next = head;
+	Node* curr = dummy;
+	Node* forward = dummy;
+	Node* prev = dummy;
+	for(int i=0;i<n;i++){
+		if(prev==NULL || prev->next==NULL) break;
+		if(b[i]==0) continue;
+		curr = prev->next;
+		forward = curr->next;
+		for(int j=1;j<b[i] && curr!=NULL && curr->next!=NULL;j++){
+			curr->next = forward->next;
+			forward->next = prev->next;
+			prev->next = forward;
+            forward = curr->next;
+		}
+        prev = curr;
+	}
+	return dummy->next;
+}
