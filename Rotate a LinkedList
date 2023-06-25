@@ -1,0 +1,23 @@
+Node *rotate(Node *head, int k) {
+     if(head==NULL || head->next==NULL) return head;
+     Node* curr = head;
+     int count = 0;
+     while(curr!=NULL) {
+          count++;
+          curr = curr->next;
+     }
+     k = k%count;
+     if(k==0) return head;
+     int cnt = 0;
+     curr = head;
+     while(cnt<count-k-1){
+          curr = curr->next;
+          cnt++;
+     }
+     Node* rotate = curr->next;
+     curr->next = NULL;
+     curr = rotate;
+     while(curr->next!=NULL) curr = curr->next;
+     curr->next = head;
+     return rotate;
+}
