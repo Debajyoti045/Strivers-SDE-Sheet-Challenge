@@ -1,0 +1,27 @@
+#include <bits/stdc++.h> 
+ bool pallindrome(string s,int st,int e){
+        while(st<=e){
+            if(s[st++]!=s[e--]) return false;
+        }
+        return true;
+    }
+    void solve(int index,string s,vector<vector<string>>&ans,vector<string>final){
+        if(index==s.size()){
+            ans.push_back(final);
+            return;
+        }
+        for(int i=index;i<s.size();i++){
+            if(pallindrome(s,index,i)){
+                final.push_back(s.substr(index,i-index+1));
+                solve(i+1,s,ans,final);
+                final.pop_back();
+            }
+        }
+    }
+vector<vector<string>> partition(string &s) 
+{
+    vector<vector<string>>ans;
+        vector<string>final;
+        solve(0,s,ans,final);
+        return ans;
+}
