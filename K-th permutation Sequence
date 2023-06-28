@@ -1,0 +1,28 @@
+class Solution {
+void solve(int index,string s,vector<string>&ans){
+    if(index==s.size()){
+        ans.push_back(s);
+        return;
+    }
+    for(int i=index;i<s.size();i++){
+        swap(s[i],s[index]);
+        solve(index+1,s,ans);
+        swap(s[i],s[index]);
+    }
+}
+public:
+    string getPermutation(int n, int k) {
+        vector<string>ans;
+        string s;
+        for(int i=0;i<n;i++){
+            int t = i+1;
+            s.push_back(char(t+'0'));
+        }
+        solve(0,s,ans);
+        sort(ans.begin(),ans.end());
+        for(auto it:ans){
+            cout<<it<<" ";
+        }
+        return ans[k-1];
+    }
+};
