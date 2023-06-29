@@ -1,0 +1,17 @@
+#include <bits/stdc++.h> 
+void find(int index,string s,vector<string>&ans){
+    if(index==s.size()){
+      ans.push_back(s);
+      return;
+    }
+    for(int i=index;i<s.size();i++){
+        swap(s[i],s[index]);
+        find(index+1,s,ans);
+        swap(s[i],s[index]);
+    }
+}
+vector<string> findPermutations(string &s) {
+   vector<string>ans;
+   find(0,s,ans);
+   return ans;
+}
