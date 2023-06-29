@@ -1,0 +1,22 @@
+bool iscolor(int node,vector<vector<int>>mat,int *color,int col,int n){
+    for(int k=0;k<n;k++){
+        if(k!=node && mat[k][node]==1 && color[k]==col) return false;
+    }
+    return true;
+}
+bool find(int node,int *color,vector<vector<int>> &mat, int m,int n){
+   if(node==n) return true;
+   for(int i=1;i<=m;i++){
+       if(iscolor(node,mat,color,i,n)) {
+            color[node] = i;
+            if(find(node+1,color,mat,m,n)) return true;
+            color[node] = 0;
+       }
+   }
+   return false;
+}
+string graphColoring(vector<vector<int>> &mat, int m) {
+  int color[mat.size()] = { 0 };
+  if(find(0,color,mat,m,mat.size())) return "YES";
+  return "NO";
+}
