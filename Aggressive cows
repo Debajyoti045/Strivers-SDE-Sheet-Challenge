@@ -1,0 +1,24 @@
+bool find(int mid,vector<int>&stalls,int k){
+      int cntCows = 1;
+      int lastPlacedCow = stalls[0];
+      for (int i = 1; i < stalls.size(); i++) {
+        if (stalls[i] - lastPlacedCow >= mid) {
+           cntCows++;
+           lastPlacedCow = stalls[i];
+        }
+      }
+      if (cntCows >= k) return true;
+      return false;
+}
+int aggressiveCows(vector<int> &stalls, int k)
+{
+   int low = 1;
+   sort(stalls.begin(),stalls.end());
+   int high = stalls[stalls.size()-1] - stalls[0];
+   while(low<=high){
+       int mid = low + (high-low)/2;
+       if(find(mid,stalls,k)) low = mid + 1;
+       else high = mid - 1;
+   }
+   return high;
+}
