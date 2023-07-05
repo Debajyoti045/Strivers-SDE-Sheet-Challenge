@@ -1,1 +1,34 @@
-
+#include <bits/stdc++.h> 
+vector<int> maxMinWindow(vector<int> a, int n) {
+     stack<int>minstack;
+    vector<int>left(n),right(n),ans(n,INT_MIN);
+    left[0]=-1;
+    minstack.push(0);
+    for(int i=1;i<n;i++) {
+        while(!minstack.empty() && a[minstack.top()]>=a[i]) {
+            minstack.pop();
+        }
+        left[i]=minstack.empty()?-1:minstack.top();
+        minstack.push(i);
+    }
+    while(!minstack.empty()) {
+        minstack.pop();
+    }
+    right[n-1]=n;
+    minstack.push(n-1);
+    for(int i=n-2;i>=0;i--) {
+        while(!minstack.empty() && a[minstack.top()]>=a[i]) {
+            minstack.pop();
+        }
+        right[i]=minstack.empty()?n:minstack.top();
+        minstack.push(i);
+    }
+    for(int i=0;i<n;i++) {
+        int len=right[i]-left[i]-1;
+        ans[len-1]=max(ans[len-1],a[i]);
+    }
+    for(int i=n-2;i>=0;i--) {
+        ans[i]=max(ans[i],ans[i+1]);
+    }
+    return ans;
+}
