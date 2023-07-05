@@ -1,0 +1,45 @@
+     #include<bits/stdc++.h>
+     vector<int> smallerLeft(vector<int>&left,vector < int > & arr,int n){
+        stack<pair<int,int>>st;
+        for(int i=0;i<n;i++){
+            if(st.size()==0) left.push_back(-1);
+            else if(st.top().first<arr[i]) left.push_back(st.top().second);
+            else{
+                while(!st.empty() && st.top().first>=arr[i]) st.pop();
+                if(st.size()==0) left.push_back(-1);
+                else left.push_back(st.top().second);
+            }
+            st.push({arr[i],i});
+        }
+        return left;
+    }
+    
+    vector<int> smallerRight(vector<int>&right,vector < int > & arr,int n){
+        stack<pair<int,int>>st;
+        for(int i=n-1;i>=0;i--){
+            if(st.size()==0) right.push_back(n);
+            else if(st.top().first<arr[i]) right.push_back(st.top().second);
+            else{
+                while(!st.empty() && st.top().first>=arr[i]) st.pop();
+                if(st.size()==0) right.push_back(n);
+                else right.push_back(st.top().second);
+            }
+            st.push({arr[i],i});
+        }
+        reverse(right.begin(),right.end());
+        return right;
+    }
+ int largestRectangle(vector < int > & arr) {
+        int n = arr.size();
+        vector<int>left;
+        vector<int>right;
+        left = smallerLeft(left,arr,n);
+        right = smallerRight(right,arr,n);
+        int maxArea = -1;
+        for(int i=0;i<n;i++){
+            int width = right[i] - left[i] - 1;
+            int area = (int)width * (int)arr[i];
+            maxArea = max(maxArea,area);
+        }
+        return maxArea;
+ }
