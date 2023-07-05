@@ -1,0 +1,19 @@
+#include <bits/stdc++.h>
+void sorted(int temp,stack<int>&st) {
+	if(st.size()==0 || st.top()<temp){
+		st.push(temp);
+		return;
+	}
+	int ans = st.top();
+	st.pop();
+	sorted(temp,st);
+    st.push(ans);
+}
+void sortStack(stack<int> &st)
+{
+	if(st.size()==0) return;
+	int temp = st.top();
+	st.pop();
+	sortStack(st);
+	sorted(temp,st);
+}
