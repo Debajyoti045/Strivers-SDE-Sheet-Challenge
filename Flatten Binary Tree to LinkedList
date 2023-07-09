@@ -1,1 +1,15 @@
-
+TreeNode<int>* solve(TreeNode<int>* root,TreeNode<int>* &prev){
+    if(root==NULL) return NULL;
+    solve(root->right,prev);
+    solve(root->left,prev);
+    root->right = prev;
+    root->left = NULL;
+    prev = root;
+    return root;
+}
+TreeNode<int> *flattenBinaryTree(TreeNode<int> *root)
+{
+    if(root==NULL) return NULL;
+    TreeNode<int>* prev = NULL;
+    return solve(root,prev);
+}
