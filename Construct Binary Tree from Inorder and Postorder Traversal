@@ -1,0 +1,21 @@
+ #include<bits/stdc++.h>
+TreeNode<int>* buildTree(vector<int>&postorder,int poststart,int postend,vector<int>&inorder,
+                         int instart,int inend,unordered_map<int,int>&mp)
+{
+     if(poststart>postend || instart>inend) return NULL;
+
+     TreeNode<int>* root = new TreeNode<int> (postorder[postend]);
+     int index = mp[root->data];
+     int numsleft = index - instart;
+
+     root->left = buildTree(postorder,poststart,poststart+numsleft-1,inorder,instart,index-1,mp);
+     root->right = buildTree(postorder,poststart+numsleft,postend-1,inorder,index+1,inend,mp);
+     return root;
+}
+TreeNode<int>* getTreeFromPostorderAndInorder(vector<int>& postorder, vector<int>& inorder) 
+{    if(postorder.size()!=inorder.size()) return NULL;
+	unordered_map<int,int>mp;
+     for(int i=0;i<inorder.size();i++) mp[inorder[i]] = i;
+
+     return buildTree(postorder,0,postorder.size()-1,inorder,0,inorder.size()-1,mp);
+}
