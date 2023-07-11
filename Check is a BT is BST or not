@@ -1,0 +1,16 @@
+#include<bits/stdc++.h>
+
+bool solve(BinaryTreeNode<int> *root,int mini,int maxi){
+    if(root==NULL) return true;
+    if(root->data<mini || root->data>maxi) return false;
+    bool left = solve(root->left,mini,root->data);
+    if(!left) return false;
+    bool right = solve(root->right,root->data,maxi);
+    if(!right) return false;
+    return true;
+}
+bool validateBST(BinaryTreeNode<int> *root) {
+   int maxi = INT_MAX;
+   int mini = INT_MIN;
+   return solve(root,mini,maxi);
+}
