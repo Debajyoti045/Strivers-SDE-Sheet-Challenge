@@ -1,0 +1,36 @@
+int findPre(BinaryTreeNode<int>*root,int key){
+    BinaryTreeNode<int>* temp = NULL;
+    if(root==NULL) return -1;
+    BinaryTreeNode<int>* curr = root;
+    while(curr!=NULL){
+        if(curr->data<key){
+            temp = curr;
+            curr = curr->right;
+        }
+        else {
+           curr = curr->left;
+        }
+    }
+    if(temp==NULL) return -1;
+    return temp->data;
+}
+int findsuc(BinaryTreeNode<int>*root,int key){
+    BinaryTreeNode<int>* temp = NULL;
+    if(root==NULL) return -1;
+    BinaryTreeNode<int>* curr = root;
+    while(curr!=NULL){
+        if(curr->data>key){
+            temp = curr;
+            curr = curr->left;
+        }
+        else {
+           curr = curr->right;
+        }
+    }
+    if(temp==NULL) return -1;
+    return temp->data;
+}
+pair<int,int> predecessorSuccessor(BinaryTreeNode<int>* root, int key)
+{
+    return {findPre(root,key),findsuc(root,key)};
+}
