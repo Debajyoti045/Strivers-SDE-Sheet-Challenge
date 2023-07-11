@@ -1,0 +1,12 @@
+#include<bits/stdc++.h>
+TreeNode<int>* solve(vector<int>&arr,int &i,int up){
+    if(i==arr.size() || arr[i]>up) return NULL;
+    TreeNode<int>* root = new TreeNode<int>(arr[i++]);
+    root->left = solve(arr,i,root->data);
+    root->right = solve(arr,i,up);
+    return root;
+}
+TreeNode<int>* preOrderTree(vector<int> &arr){
+    int i = 0;
+    return solve(arr,i,INT_MAX);
+}
