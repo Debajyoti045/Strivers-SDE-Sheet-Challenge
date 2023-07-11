@@ -1,0 +1,46 @@
+class BSTIterator{
+   public:
+       stack<BinaryTreeNode<int> *>st;
+       bool reverse;
+    BSTIterator(BinaryTreeNode<int> *root,bool isreverse){
+       reverse = isreverse;
+       pushall(root);
+    }
+
+    int next(){
+        BinaryTreeNode<int> *temp = st.top();
+        st.pop();
+        if(!reverse) pushall(temp->right);
+        else pushall(temp->left);
+        return temp->data;
+    }
+
+    bool hashset(){
+        return !st.empty();
+    }
+
+    void pushall(BinaryTreeNode<int> *root){
+        BinaryTreeNode<int> *temp = root;
+        while(temp){
+            st.push(temp);
+            if(!reverse)
+              temp = temp->left;
+            else 
+              temp = temp->right;
+        }
+    }
+};
+bool pairSumBst(BinaryTreeNode<int> *root, int k)
+{
+    BSTIterator l(root,false);
+    BSTIterator r(root,true);
+
+    int i = l.next();
+    int j = r.next();
+    while(i<j){
+        if(i+j==k) return true;
+        else if(i+j<k) i = l.next();
+        else j = r.next();
+    }
+    return false;
+}
