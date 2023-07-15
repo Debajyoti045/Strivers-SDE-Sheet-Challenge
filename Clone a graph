@@ -1,0 +1,32 @@
+graphNode *cloneGraph(graphNode *node)
+{
+    graphNode* copy;
+     unordered_map<graphNode* ,graphNode*> mp;
+	 if(node)
+	 {
+		copy= new graphNode(node->data);
+		mp[node] = copy;
+	 }
+	 queue<graphNode*> q;
+	 q.push(node);
+
+
+	 while(!q.empty())
+	 {
+		 auto temp = q.front();
+		 q.pop();
+
+		 for(auto nb:temp->neighbours)
+		 {
+			 if(mp.find(nb)==mp.end()) 
+			 {
+				 graphNode* c = new graphNode(nb->data);
+				 mp[nb] = c; 
+				 q.push(nb);
+ 			 }
+			  mp[temp]->neighbours.push_back(mp[nb]);
+		 }
+	 }
+
+	 return copy;
+}
