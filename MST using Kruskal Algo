@@ -1,0 +1,46 @@
+#include <bits/stdc++.h> 
+class Disjoint{
+   public:
+      vector<int>parent,size;
+	Disjoint(int n){
+      parent.resize(n+1);
+	  size.resize(n+1,1);
+	  for(int i=1;i<=n;i++) parent[i] = i;
+	}
+
+	int findUltPar(int node){
+		if(node==parent[node]) return node;
+		return parent[node] = findUltPar(parent[node]);
+	}
+
+	void UnionBySize(int u,int v){
+		int ult_u = findUltPar(u);
+		int ult_v = findUltPar(v);
+	  if(size[ult_u] < size[ult_v]){
+		  parent[ult_u] = ult_v;
+		  size[ult_v]+=size[ult_u];
+	  }
+	  else{
+		  parent[ult_v] = ult_u;
+		  size[ult_u]+=size[ult_v]; 
+	  }
+	}
+};
+bool comp(vector<int>&a,vector<int>&b){
+	return a[2]<=b[2];
+}
+int kruskalMST(int n, int m, vector<vector<int>> &graph) {
+	Disjoint ds(n);
+	sort(graph.begin(),graph.end(),comp);
+   int sum = 0;
+   for(auto it:graph){
+	   int u = it[0];
+	   int v = it[1];
+	   int wt = it[2];
+	 if(ds.findUltPar(u)!=ds.findUltPar(v)){
+		 sum+=wt;
+		 ds.UnionBySize(u,v);
+	 }
+   }
+   return sum;
+}
