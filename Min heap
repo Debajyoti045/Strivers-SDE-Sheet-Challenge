@@ -1,0 +1,46 @@
+#include <bits/stdc++.h> 
+void Heapify(int i,vector<int>&arr){
+    int left=2*i+1;
+    int right=2*i+2;
+    int smallest=i;
+    if(arr[left]<arr[i] && left<arr.size()){
+        smallest=left;
+    }
+    if(arr[right]<arr[i] && arr[right]<arr[left] && right<arr.size()){
+        smallest=right;
+    }
+    if(smallest!=i){
+        swap(arr[smallest],arr[i]);
+        Heapify(smallest,arr);
+    }
+    return;
+}
+void insert(vector<int>&arr,int val){
+    arr.push_back(val);
+    int index = arr.size() - 1;
+    int parent = (index-1)/2;
+    while(arr[parent]>arr[index]){
+        Heapify(parent,arr);
+        index = parent;
+        parent = (index-1)/2;
+    }
+}
+void deletenode(vector<int>&arr){
+    arr[0] = arr[arr.size()-1];
+    arr.pop_back();
+    Heapify(0,arr);
+}
+vector<int> minHeap(int n, vector<vector<int>>& q) {
+    vector<int>ans;
+    vector<int>arr;
+    for(auto it:q){
+        if(it[0]==0){
+           insert(arr,it[1]);
+        }
+        else if(it[0]==1){
+            ans.push_back(arr[0]);
+            deletenode(arr);
+        }
+    }
+    return ans;
+}
