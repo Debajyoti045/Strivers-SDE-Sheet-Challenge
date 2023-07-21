@@ -1,0 +1,19 @@
+string reverseString(string &str){
+	string ans = "";
+	str = str + " ";
+	int i=0;
+	while(i<str.size() && str[i]==' '){
+         i++;
+	}
+	while(i<str.size()){
+		string s = "";
+		while(i<str.size() && str[i]!=' ') {
+			s+=str[i];
+			i++;
+		}
+        if(ans.size()==0) ans = s;
+		else ans = s + " " + ans;
+		while(i<str.size() && str[i]==' ') i++;
+	}	
+	return ans;
+}
