@@ -1,25 +1,39 @@
 #include <bits/stdc++.h> 
+class node{
+  public:
+      int data;
+      int i;
+      int j;
+  node(int data,int row,int col){
+      this->data = data;
+      this->i = row;
+      this->j = col;
+  } 
+};
+class compare{
+  public:
+    bool operator()(node* a,node* b){
+        return a->data>b->data;
+    }
+};
 vector<int> mergeKSortedArrays(vector<vector<int>>&kArrays, int k)
 {
-     vector<int>finalans;
-  priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
-  vector<int>indexes(k,0);
-  for (int i=0;i<k;i++)
-  {
-     pq.push({kArrays[i][0],i});
-  }
-  while(!pq.empty())
-  {
-      auto temp=pq.top();
-      pq.pop();
-      finalans.push_back(temp.first);
-      int ind=temp.second;
-      int newIndex=indexes[ind]+1;
-      if (newIndex<kArrays[ind].size())
-      {
-          pq.push({kArrays[ind][newIndex],ind});
-          indexes[ind]=newIndex;
-      }
-  }
-  return finalans;
+   priority_queue<node*,vector<node*>,compare> q;
+   for(int i=0;i<k;i++){
+       node* tmp = new node(kArrays[i][0],i,0);
+       q.push(tmp);
+   }
+   vector<int>ans;
+   while(q.size()>0){
+     node* temp = q.top();
+     ans.push_back(temp->data);
+     q.pop();
+     int i = temp->i;
+     int j = temp->j;
+     if(j+1<kArrays[i].size()){
+         node* tmp = new node(kArrays[i][j+1],i,j+1);
+         q.push(tmp);
+     }
+   }
+   return ans;
 }
