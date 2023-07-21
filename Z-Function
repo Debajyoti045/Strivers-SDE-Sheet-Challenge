@@ -1,0 +1,11 @@
+int zAlgorithm(string text, string pattern, int n, int m)
+{
+	int count = 0;
+	for(int i=0;i<=text.size()-m;i++){
+        if(text[i]==pattern[0]){
+            string str = text.substr(i,pattern.size());
+		  if(str==pattern) count++;
+		}
+	}
+	return count;
+}
